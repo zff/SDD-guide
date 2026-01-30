@@ -1,0 +1,5 @@
+{
+  "name": "GitHub Spec Kit Visualizer",
+  "description": "An interactive simulation of the GitHub Spec Kit (SDD) workflow, demonstrating the transformation from principles to code.",
+  "requestFramePermissions": []
+}
