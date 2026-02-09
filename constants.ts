@@ -1,5 +1,4 @@
 
-
 import { StepData } from './types';
 
 export const STEPS: StepData[] = [
@@ -36,13 +35,16 @@ export const STEPS: StepData[] = [
     description: 'Defining project principles and governance.',
     conceptContent: `# /speckit.constitution
 
-**Purpose**: Establishes the foundational principles and governance for the project.
+### 🎩 Current Role: Principal Architect
 
-This command generates a \`constitution.md\` file that serves as the "Supreme Law" for the project. It defines:
+**Focus**: Governance, Standards, and Project DNA.
+
+**Action**: Establishes the foundational principles and governance for the project. 
+
+This command generates a \`constitution.md\` file that serves as the "Supreme Law". It defines:
 - **Code Quality Standards**: Linting, formatting, test coverage.
 - **Architectural Guidelines**: Preferred patterns, modularity.
 - **UX/UI Principles**: Design system alignment, accessibility.
-- **Performance Budgets**: Load times, bundle sizes.
 
 **Why it matters**: Without a constitution, decisions become subjective. This file ensures all AI-generated or human-written code aligns with agreed-upon standards.`,
     fileStructure: [
@@ -84,12 +86,13 @@ This command generates a \`constitution.md\` file that serves as the "Supreme La
     description: 'Describing the WHAT and WHY, ignoring the HOW.',
     conceptContent: `# /speckit.specify
 
-**Purpose**: Captures the "What" and "Why" of the feature, strictly avoiding the "How".
+### 🎩 Current Role: Business Analyst (BA)
 
-This command initiates a new feature branch and creates a \`spec.md\`.
-- **Focus**: User stories, functional requirements, business logic.
-- **Constraint**: No technical implementation details (no mentioning React, SQL, etc. yet).
-- **Outcome**: A pure requirement document that serves as the single source of truth.
+**Focus**: Defines the "What" (User Value) and "Why" (Motivation).
+
+**Action**: Writes the User Stories and Functional Requirements. 
+
+They strictly ignore technology (e.g., no mention of databases or frameworks) to ensure the business logic is pure. This command initiates a new feature branch and creates a \`spec.md\`.
 
 **Why it matters**: Separating requirements from implementation prevents "solutionizing" too early and ensures the problem is well-understood before coding begins.`,
     fileStructure: [
@@ -149,14 +152,13 @@ This command initiates a new feature branch and creates a \`spec.md\`.
     description: 'Resolving ambiguities in the specification.',
     conceptContent: `# /speckit.clarify
 
-**Purpose**: Identifies and resolves ambiguities in the specification.
+### 🎩 Current Role: QA Engineer
 
-This command analyzes \`spec.md\` to find:
-- **Missing Edge Cases**: "What happens if the user is offline?"
-- **Vague Terms**: "Make it fast" vs "Load under 200ms".
-- **Contradictions**: Conflicting requirements.
+**Focus**: Finds Ambiguities and Edge Cases.
 
-It prompts for decisions and updates \`spec.md\` with a "Clarified" section.
+**Action**: Acts as an **Interviewer**.
+
+The QA Engineer reviews the Spec to find missing details (e.g., "What happens if the user is offline?", "What about invalid input?"). They ask specific questions to fix holes in the spec before any code is written.
 
 **Why it matters**: Ambiguity is the root cause of most bugs. Fixing requirements here costs 10x less than fixing code later.`,
     fileStructure: [
@@ -196,14 +198,15 @@ It prompts for decisions and updates \`spec.md\` with a "Clarified" section.
     description: 'Defining the technical approach (The HOW).',
     conceptContent: `# /speckit.plan
 
-**Purpose**: Defines the technical implementation strategy ("The How").
+### 🎩 Current Role: Solution Architect
 
-This command reads the \`constitution.md\` and \`spec.md\` to generate:
-- **plan.md**: Tech stack choices, library selection, architectural diagrams.
-- **data-model.md**: Schema definitions, API contracts.
-- **research.md**: Trade-off analysis (e.g., Library A vs Library B).
+**Focus**: Defines the "How" (Technology & Structure).
 
-**Why it matters**: Planning acts as a bridge between abstract requirements and concrete code. It ensures the proposed solution is feasible and compliant with the project constitution.`,
+**Action**: Translates the BA's requirements into a technical blueprint. 
+
+They decide the Tech Stack, define Data Models, and create API Contracts to ensure the system is feasible and scalable. They generate \`plan.md\` and \`data-model.md\`.
+
+**Why it matters**: Planning acts as a bridge between abstract requirements and concrete code. It ensures the proposed solution is compliant with the project constitution.`,
     fileStructure: [
       {
         name: 'specs',
@@ -244,21 +247,22 @@ This command reads the \`constitution.md\` and \`spec.md\` to generate:
     docLink: 'https://github.com/github/spec-kit/blob/main/templates/commands/plan.md'
   },
   {
-    id: 'checklist',
-    title: '5. Checklist',
-    icon: 'CheckSquare',
-    command: '/speckit.checklist',
-    description: 'Validating spec and plan integrity.',
-    conceptContent: `# /speckit.checklist
+    id: 'analyze',
+    title: '5. Verify',
+    icon: 'ShieldCheck',
+    command: '/speckit.analyze',
+    description: 'Validating spec, plan, and tasks integrity.',
+    conceptContent: `# /speckit.analyze
 
-**Purpose**: Validates the integrity of the Spec and Plan before execution.
+### 🎩 Current Role: QA Engineer (Auditor)
 
-This command runs a static analysis on your markdown files to verify:
-- **Completeness**: Are all critical sections present?
-- **Alignment**: Does the Plan contradict the Constitution?
-- **Testability**: Are requirements specific enough to be tested?
+**Focus**: Verification and Safety.
 
-**Why it matters**: This is the "Quality Gate". It prevents low-quality instructions from being fed into the coding phase, reducing hallucinations and logic errors.`,
+**Action**: Acts as an **Auditor**.
+
+Checks if the Technical Plan actually covers all requirements in the Spec before coding begins. Checks for potential security issues or "hallucinated" dependencies.
+
+**Why it matters**: This is the "Quality Gate". It prevents logical errors from propagating into the implementation phase.`,
     fileStructure: [
       {
         name: 'specs',
@@ -271,26 +275,27 @@ This command runs a static analysis on your markdown files to verify:
             isOpen: true,
             children: [
               { name: 'spec.md', type: 'file' },
-              { name: 'plan.md', type: 'file' }
+              { name: 'plan.md', type: 'file' },
+              { name: 'tasks.md', type: 'file' }
             ]
           }
         ]
       }
     ],
-    activeFile: 'Quality Checklist',
+    activeFile: 'Analysis Report',
     editorContent: '', 
     checklist: [
-      'No implementation details in spec.md (WHAT only)',
-      'All requirements are testable',
-      'Tech plan aligns with Constitution performance goals',
-      'No unresolved critical clarifications'
+      'Spec-Plan Alignment: 100%',
+      'Security Scan: Passed (0 issues)',
+      'Task Coverage: All requirements mapped',
+      'Context Window Efficiency: Optimized'
     ],
     reminder: {
       type: 'success',
-      text: 'Quality gates passed. Ready for task breakdown.'
+      text: 'Analysis passed. Ready for implementation.'
     },
     layout: 'default',
-    docLink: 'https://github.com/github/spec-kit/blob/main/templates/commands/checklist.md'
+    docLink: 'https://github.com/github/spec-kit/blob/main/templates/commands/analyze.md'
   },
   {
     id: 'tasks',
@@ -300,12 +305,13 @@ This command runs a static analysis on your markdown files to verify:
     description: 'Breaking down the plan into executable units.',
     conceptContent: `# /speckit.tasks
 
-**Purpose**: Breaks down the implementation plan into atomic, executable units.
+### 🎩 Current Role: Developer (Planner)
 
-This command converts \`plan.md\` into \`tasks.md\`:
-- **Granularity**: Small, isolated tasks (e.g., "Create DB Schema", "Setup API Endpoint").
-- **Dependencies**: Identifies which tasks must happen sequentially vs parallely.
-- **Verification**: Defines "Definition of Done" for each task.
+**Focus**: Execution and Planning.
+
+**Action**: Breaks the architecture into small, sequential steps (Task List).
+
+They convert the \`plan.md\` into atomic tasks in \`tasks.md\`, defining dependencies and "Definition of Done" for each.
 
 **Why it matters**: LLMs (and humans) struggle with massive contexts. Breaking work into small, verified steps dramatically increases success rates.`,
     fileStructure: [
@@ -356,15 +362,15 @@ This command converts \`plan.md\` into \`tasks.md\`:
     description: 'Generating code and verifying outcomes.',
     conceptContent: `# /speckit.implement
 
-**Purpose**: Executes the tasks to generate the actual codebase.
+### 🎩 Current Role: Developer (Coder)
 
-This command iterates through \`tasks.md\`:
-1. **Context Loading**: Reads relevant parts of Spec, Plan, and existing Code.
-2. **Generation**: Writes code for the specific task.
-3. **Verification**: specific tests or checks.
-4. **Integration**: Updates the project files.
+**Focus**: Implementation.
 
-**Why it matters**: This is where the rubber meets the road. Because previous steps ensured clarity and structure, the code generation is highly accurate and requires minimal debugging.`,
+**Action**: Writes the actual code.
+
+Follows the strict rules of the Architect and the requirements of the BA. Reads the task, generates the code, runs the tests, and updates the project files.
+
+**Why it matters**: This is where the rubber meets the road. Because previous steps ensured clarity and structure, the code generation is highly accurate.`,
     fileStructure: [
       {
         name: 'src',

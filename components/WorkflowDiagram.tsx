@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowRight, ArrowDown, FileText, Terminal, Layers, CheckCircle2, Database, Code } from 'lucide-react';
+import { ArrowRight, ArrowDown, FileText, Terminal, Layers, CheckCircle2, Database, Code, User, UserCheck, HardHat, PenTool } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const WorkflowDiagram: React.FC = () => {
@@ -8,6 +8,7 @@ const WorkflowDiagram: React.FC = () => {
     {
       id: 'step0',
       label: 'Step 0: Foundation',
+      role: 'Principal Architect',
       cmd: '/speckit.constitution',
       files: ['constitution.md'],
       color: 'purple',
@@ -16,6 +17,7 @@ const WorkflowDiagram: React.FC = () => {
     {
       id: 'step1',
       label: 'Step 1: Define',
+      role: 'Business Analyst',
       cmd: '/speckit.specify',
       files: ['spec.md'],
       color: 'blue',
@@ -24,7 +26,8 @@ const WorkflowDiagram: React.FC = () => {
     {
       id: 'step2',
       label: 'Step 2: Refine',
-      cmd: '/speckit.clarify (Optional)',
+      role: 'QA Engineer',
+      cmd: '/speckit.clarify',
       files: ['spec.md (Updated)'],
       color: 'blue',
       dashed: true,
@@ -33,6 +36,7 @@ const WorkflowDiagram: React.FC = () => {
     {
       id: 'step3',
       label: 'Step 3: Architect',
+      role: 'Solution Architect',
       cmd: '/speckit.plan',
       files: ['plan.md', 'contracts/', 'data-model.md'],
       color: 'indigo',
@@ -41,6 +45,7 @@ const WorkflowDiagram: React.FC = () => {
     {
       id: 'step4',
       label: 'Step 4: Breakdown',
+      role: 'Developer (Planner)',
       cmd: '/speckit.tasks',
       files: ['tasks.md'],
       color: 'orange',
@@ -49,7 +54,8 @@ const WorkflowDiagram: React.FC = () => {
     {
       id: 'step5',
       label: 'Step 5: Verify',
-      cmd: '/speckit.checklist (Optional)',
+      role: 'QA Engineer',
+      cmd: '/speckit.analyze',
       files: ['tasks.md (Verified)'],
       color: 'orange',
       dashed: true,
@@ -58,6 +64,7 @@ const WorkflowDiagram: React.FC = () => {
     {
       id: 'step6',
       label: 'Step 6: Build',
+      role: 'Developer (Coder)',
       cmd: '/speckit.implement',
       files: ['Source Code'],
       color: 'green',
@@ -82,7 +89,7 @@ const WorkflowDiagram: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-2xl font-bold text-github-light-text dark:text-github-text mb-2">Spec Kit Workflow Map</h2>
-          <p className="text-github-light-text-muted dark:text-github-gray">From principles to code in 7 structured steps</p>
+          <p className="text-github-light-text-muted dark:text-github-gray">The AI switches roles at each step to ensure quality and structure.</p>
         </div>
 
         <div className="relative">
@@ -101,10 +108,19 @@ const WorkflowDiagram: React.FC = () => {
                 {/* Left: Step Node */}
                 <div className="flex justify-start md:justify-end">
                   <div className={`w-full md:w-64 p-3 rounded-lg shadow-sm flex items-center gap-3 ${getColorClasses(step.color, !!step.dashed)} bg-opacity-90 dark:bg-opacity-90 backdrop-blur-sm z-10`}>
-                    <div className="p-2 bg-white dark:bg-black/20 rounded-full">
+                    <div className="p-2 bg-white dark:bg-black/20 rounded-full flex-shrink-0">
                       <step.icon size={18} />
                     </div>
-                    <span className="font-semibold text-sm">{step.label}</span>
+                    <div className="flex flex-col overflow-hidden">
+                      <span className="font-semibold text-sm truncate">{step.label}</span>
+                      <span className="text-[10px] uppercase tracking-wider opacity-70 flex items-center gap-1 font-medium">
+                        {step.role === 'Business Analyst' && <User size={10} />}
+                        {step.role.includes('QA') && <UserCheck size={10} />}
+                        {step.role.includes('Architect') && <HardHat size={10} />}
+                        {step.role.includes('Developer') && <Code size={10} />}
+                        {step.role}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
